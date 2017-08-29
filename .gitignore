@@ -67,3 +67,4 @@ dist
 # Custom: do not commit binary file generated from Mysql Workbench file
 revisioner.pdf
 revisioner.svg
+revisioner.mwb.bak
