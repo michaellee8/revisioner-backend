@@ -3,6 +3,7 @@ import path from "path";
 import logger from "morgan";
 import bodyParser from "body-parser";
 import routes from "./routes";
+import firebaseAuth from "firebaseAuth";
 
 const app = express();
 app.disable("x-powered-by");
@@ -11,6 +12,7 @@ app.disable("x-powered-by");
 app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "pug");
 
+app.use(firebaseAuth);
 app.use(
   logger("dev", {
     skip: () => app.get("env") === "test"
