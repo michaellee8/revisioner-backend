@@ -1,12 +1,14 @@
 var firebaseAdmin = require("firebase-admin");
 
 firebaseAdmin.initializeApp({
-  credential: firebaseAdmin.credential.cert(require("./serviceAccountKey.json")),
+  credential: firebaseAdmin.credential.cert(
+    require("./serviceAccountKey.json")
+  ),
   databaseURL: "https://revisioner-3c321.firebaseio.com"
 });
 module.exports = function firebaseAuth(
-  req: Express$Request,
-  res: Express$Response,
+  req: express$Request,
+  res: express$Response,
   next
 ) {
   if (req.query.userFirebaseId && req.query.userFirebaseToken) {
@@ -21,7 +23,7 @@ module.exports = function firebaseAuth(
           res.status(400).send('{ error : "Invalid auth data" }');
         }
       })
-      .else(err => {
+      .catch(err => {
         console.log(err);
         res.status(400).send('{ error : "Invalid auth data" }');
       });
