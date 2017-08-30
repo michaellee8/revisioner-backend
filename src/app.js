@@ -3,7 +3,7 @@ import path from "path";
 import logger from "morgan";
 import bodyParser from "body-parser";
 import routes from "./routes";
-import firebaseAuth from "firebaseAuth";
+import firebaseAuth from "./firebaseAuth";
 
 const app = express();
 app.disable("x-powered-by");
