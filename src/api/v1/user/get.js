@@ -1,8 +1,8 @@
-var db = require("../../../../db");
+var db = require("../../../db");
 
 module.exports = function(req: express$Request, res: express$Response) {
-  if (req.userFirebaseId) {
-    res.send(JSON.stringify({ currentAccount: null }));
+  if (!req.userFirebaseId) {
+    res.send(null);
   } else {
     db.query(
       "SELECT userId, userName, userPhotoUrl, userIntro FROM revisioner.users WHERE revisioner.users.userFirebaseAuthId = ?",
@@ -10,9 +10,9 @@ module.exports = function(req: express$Request, res: express$Response) {
       (error, results, fields): mysql$QueryCallback => {
         if (error) {
           console.log(error);
-          res.status(500).send("Internal server error");
+          res.status(500).send({ error: "Internal server error" });
         } else if (results.length === 0) {
-          res.status(404).send("No such user");
+          res.status(404).send({ error: "No such user" });
         } else if (results.length > 1) {
           console.log(
             new Error(
@@ -20,11 +20,10 @@ module.exports = function(req: express$Request, res: express$Response) {
                 req.userFirebaseId
             )
           );
-          res
-            .status(500)
-            .send(
-              "More than one user exists with this firebase auth id, pls contact developer"
-            );
+          res.status(500).send({
+            error:
+              "More than one user exists with this firebase auth id, please contact developer"
+          });
         } else {
           res.send(results[0]);
         }
