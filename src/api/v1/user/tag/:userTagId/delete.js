@@ -1,23 +1,23 @@
-var db = require("../../../db");
+var db = require("../../../../../db");
 
 module.exports = function(req: express$Request, res: express$Response) {
   if (!req.userFirebaseId) {
-    res.send(null);
+    res.status(404).send({ error: "no such user" });
   } else {
     db.query(
       `
-      SELECT userId, userName, userPhotoUrl, userIntro
-      FROM revisioner.users INNER JOIN revisioner.userTags
+      DELETE FROM revisioner.userTags
+      INNER JOIN revisioner.users
       ON revisioner.users.userId = revisioner.userTags.userId
-      WHERE revisioner.userTags.userTagContent = ?
+      WHERE revisioner.userTags.userTagId = ? AND revisioner.users.userFirebaseAuthId = ?
       `,
-      [req.query.userTagContent],
+      [req.params.userTagId, req.userFirebaseId],
       (error, results, fields): mysql$QueryCallback => {
         if (error) {
           console.log(error);
           res.status(500).send({ error: "Internal server error" });
         } else {
-          res.send(results);
+          res.send({ deleted: true });
         }
       }
     );

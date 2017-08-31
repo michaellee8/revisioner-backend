@@ -6,7 +6,7 @@
     "type": "git",
     "url": "git+https://github.com/vmasto/express-babel.git"
   },
-  "author": "Vassilis Mastorostergios <vmasto@gmail.com>",
+  "author": "michaellee8 <ckmichael8@gmail.com>",
   "license": "GPL-3.0",
   "main": "dist/index.js",
   "engines": {
@@ -45,11 +45,13 @@
     "rimraf": "^2.6.1"
   },
   "devDependencies": {
+    "babel-eslint": "^7.2.3",
     "babel-jest": "^20.0.0",
     "babel-preset-flow": "^6.23.0",
     "babel-register": "^6.24.1",
     "dotenv": "^4.0.0",
     "eslint": "^3.19.0",
+    "eslint-plugin-flowtype": "^2.35.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jest": "^20.0.0",
     "eslint-watch": "^3.1.0",
@@ -70,27 +72,6 @@
         }
       ]
     ]
-  },
-  "eslintConfig": {
-    "plugins": [
-      "import",
-      "jest"
-    ],
-    "parserOptions": {
-      "ecmaVersion": 2017,
-      "sourceType": "module"
-    },
-    "env": {
-      "node": true,
-      "jest": true
-    },
-    "extends": [
-      "eslint:recommended"
-    ],
-    "rules": {
-      "jest/no-focused-tests": 2,
-      "jest/no-identical-title": 2
-    }
   },
   "jest": {
     "testEnvironment": "node"
