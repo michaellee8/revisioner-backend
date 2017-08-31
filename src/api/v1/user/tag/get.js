@@ -1,4 +1,4 @@
-var db = require("../../../db");
+var db: mysql$Connection = require("../../../db");
 
 module.exports = function(req: express$Request, res: express$Response) {
   if (!req.userFirebaseId) {
