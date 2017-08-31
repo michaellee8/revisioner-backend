@@ -1,4 +1,5 @@
 var firebaseAdmin = require("firebase-admin");
+var db = require("./db")
 
 firebaseAdmin.initializeApp({
   credential: firebaseAdmin.credential.cert(
@@ -18,6 +19,15 @@ module.exports = function firebaseAuth(
       .then(decodedToken => {
         if (decodedToken.uid === req.query.userFirebaseId) {
           req.userFirebaseId = decodedToken.uid;
+          db.query(
+            "UPDATE users WHERE userFirebaseId = ?",
+            [req.userFirebaseId],
+            (error, results, fields): mysql$QueryCallback => {
+              if (error) {
+                console.log(error);
+              }
+            }
+          );
           next();
         } else {
           res.status(400).send('{ error : "Invalid auth data" }');
