@@ -1,4 +1,4 @@
-var db: mysql$Connection = require("../../../../db");
+var db: mysql$Connection = require("projectDb");
 
 module.exports = function(req: express$Request, res: express$Response) {
   if (!req.params.userId) {

@@ -1,4 +1,5 @@
-var db = require("../../../db");
+var db: mysql$Connection = require("projectDb");
+
 module.exports = function(req: express$Request, res: express$Response) {
   if (!req.userFirebaseId) {
     res.status(500).send({ error: "Not logged in" });
