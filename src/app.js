@@ -1,9 +1,9 @@
-import express from "express";
-import path from "path";
-import logger from "morgan";
-import bodyParser from "body-parser";
-import routes from "./routes";
-import firebaseAuth from "./firebaseAuth";
+var express = require("express");
+var path = require("path");
+var logger = require("morgan");
+var bodyParser = require("body-parser");
+var routes = require("./routes");
+var firebaseAuth = require("./firebaseAuth");
 
 const app = express();
 app.disable("x-powered-by");
@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "../public")));
 
 // Routes
-app.use("/", routes);
+routes(app);
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -40,4 +40,4 @@ app.use((err, req, res, next) => {
   });
 });
 
-export default app;
+module.exports = app;

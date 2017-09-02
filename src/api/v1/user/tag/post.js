@@ -1,6 +1,6 @@
-var db: mysql$Connection = require("projectDb");
+var db = require("db/projectDb");
 
-module.exports = function(req: express$Request, res: express$Response) {
+module.exports = function(req, res, next) {
   if (!req.userFirebaseId) {
     res.status(403).send({ error: "Not logged in" });
   } else {
@@ -12,7 +12,7 @@ module.exports = function(req: express$Request, res: express$Response) {
       db.query(
         "SELECT userId FROM revisioner.users WHERE userFirebaseAuthId = ?",
         [req.userFirebaseId],
-        (error, results, fields): mysql$QueryCallback => {
+        (error, results, fields) => {
           if (error) {
             console.log(error);
             res.status(500).send({ error: "Internal server error" });
@@ -42,7 +42,7 @@ module.exports = function(req: express$Request, res: express$Response) {
                 results[0].userId,
                 req.body.userTagContent
               ],
-              (error, results, fields): mysql$QueryCallback => {
+              (error, results, fields) => {
                 if (error) {
                   console.log(error);
                   res.status(500).send({ error: "Internal server error" });

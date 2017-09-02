@@ -1,6 +1,6 @@
-var db: mysql$Connection = require("projectDb");
+var db = require("db/projectDb");
 
-module.exports = function(req: express$Request, res: express$Response) {
+module.exports = function(req, res, next) {
   if (!req.params.userId) {
     res.status(400).send({ error: "Missing userId" });
   } else {
@@ -11,7 +11,7 @@ module.exports = function(req: express$Request, res: express$Response) {
     WHERE userId = ?
     `,
       [req.params.userId],
-      (error, results, fields): mysql$QueryCallback => {
+      (error, results, fields) => {
         if (error) {
           console.log(error);
           res

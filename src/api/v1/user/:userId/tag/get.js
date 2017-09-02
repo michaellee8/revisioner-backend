@@ -1,6 +1,6 @@
-var db = require("projectDb");
+var db = require("db/projectDb");
 
-module.exports = function(req: express$Request, res: express$Response) {
+module.exports = function(req, res, next) {
   db.query(
     `
     SELECT userTagId, userId, userTagContent
@@ -8,7 +8,7 @@ module.exports = function(req: express$Request, res: express$Response) {
     WHERE userId = ?
   `,
     [req.params.userId],
-    (error, results, fields): mysql$QueryCallback => {
+    (error, results, fields) => {
       if (error) {
         console.log(error);
         res.status(500).send({ error: "Internal server error" });

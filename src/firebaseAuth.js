@@ -1,5 +1,5 @@
 var firebaseAdmin = require("firebase-admin");
-var db = require("./db")
+var db = require("db/projectDb");
 
 firebaseAdmin.initializeApp({
   credential: firebaseAdmin.credential.cert(
@@ -7,11 +7,7 @@ firebaseAdmin.initializeApp({
   ),
   databaseURL: "https://revisioner-3c321.firebaseio.com"
 });
-module.exports = function firebaseAuth(
-  req: express$Request,
-  res: express$Response,
-  next
-) {
+module.exports = function firebaseAuth(req, res, next) {
   if (req.query.userFirebaseId && req.query.userFirebaseToken) {
     firebaseAdmin
       .auth()
@@ -22,7 +18,7 @@ module.exports = function firebaseAuth(
           db.query(
             "UPDATE users WHERE userFirebaseId = ?",
             [req.userFirebaseId],
-            (error, results, fields): mysql$QueryCallback => {
+            (error, results, fields) => {
               if (error) {
                 console.log(error);
               }

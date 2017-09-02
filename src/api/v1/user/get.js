@@ -1,13 +1,13 @@
-var db: mysql$Connection = require("projectDb");
+var db = require("db/projectDb");
 
-module.exports = function(req: express$Request, res: express$Response) {
+module.exports = function(req, res, next) {
   if (!req.userFirebaseId) {
     res.send(null);
   } else {
     db.query(
       "SELECT userId, userName, userPhotoUrl, userIntro FROM revisioner.users WHERE revisioner.users.userFirebaseAuthId = ?",
       [req.userFirebaseId],
-      (error, results, fields): mysql$QueryCallback => {
+      (error, results, fields) => {
         if (error) {
           console.log(error);
           res.status(500).send({ error: "Internal server error" });
